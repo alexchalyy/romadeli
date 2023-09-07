@@ -1,0 +1,106 @@
+@using TorysDeli.Models
+
+@{
+    ViewData["Title"] = "Tory's Deli";
+    // Define a list of menu items
+    var menuItems = new List<MenuItem>
+    {
+        new MenuItem { Name = "Reuben", Description = "Grilled sandwich featuring corned beef on rye bread.", Price = 11.99, ImageUrl = "https://recipe-graphics.grocerywebsite.com/0_GraphicsRecipes/5128_4k.jpg" },
+        new MenuItem { Name = "Turkey Sandwitch", Description = "Turkey, mayo, lettuce ", Price = 10.99, ImageUrl = "https://tmbidigitalassetsazure.blob.core.windows.net/rms3-prod/attachments/37/1200x1200/Bistro-Turkey-Sandwich_EXPS_SDON17_203868_D06_28_3b.jpg" },
+        new MenuItem { Name = "Meatball Sandwitch", Description = "Meatballs, marinara sauce, Mozzarella cheese", Price = 10.99, ImageUrl = "https://cookingwithcocktailrings.com/wp-content/uploads/2021/02/img_60394b8bc4783.jpg" },
+        new MenuItem { Name = "Philadelphia Cheesesteak Sandwitch", Description = "Made from thinly sliced pieces of beefsteak and melted cheese in a long hoagie roll.", Price = 11.99, ImageUrl = "https://www.willcookforsmiles.com/wp-content/uploads/2022/09/Philly-Cheesesteak-closeup-sq.jpg" },
+        new MenuItem { Name = "Chicken Cheesesteak Sandwitch", Description = "Thinly sliced chicken sizzled in a hot skillet, topped with sauteed sweet bell peppers and onions, covered in melted American cheese, and served on a soft toasted Hoagie roll.", Price = 10.99, ImageUrl = "https://www.foodnetwork.com/content/dam/images/food/fullset/2018/6/28/0/KC1711_Sunnys-Quick-Chicken-Cheesesteak_s4x3.jpg" },
+        // Add more menu items as needed
+    };
+}
+
+<style>
+    body {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .div_background {
+        background-size: cover; /* This makes the image cover the entire element */
+        background-position: center center; /* This centers the image both horizontally and vertically */
+        position: fixed; /* This positions the element relative to the viewport */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .center {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .large-text {
+        font-size: 5rem;
+        font-family: "Arial", sans-serif; /* Replace with your preferred font */
+        color: rgb(5, 5, 5); /* Change text color if needed */
+        align-items: center;
+    }
+
+    .larger-text {
+        font-size: 10rem;
+        font-family: "Arial", sans-serif; /* Replace with your preferred font */
+        color: rgb(4, 4, 4); /* Change text color if needed */
+    }
+</style>
+
+<head>
+    <title>Your Web Application</title>
+    <style>
+        /* Add CSS styles for the header and navigation links */
+        header {
+            background-color: #333; /* Background color for the header */
+            padding: 10px 0; /* Add some padding for spacing */
+            text-align: left; /* Center-align the links within the header */
+        }
+
+        nav ul {
+            list-style-type: none; /* Remove bullets from the list */
+            padding: 0;
+        }
+
+        nav li {
+            display: inline; /* Display list items inline */
+            margin: 200px; /* Add space between links */
+        }
+
+        nav a {
+            text-decoration: none; /* Remove underlines from links */
+            color: rgb(253, 251, 251); /* Text color for links */
+            font-family: "Arial", sans-serif; /* Replace with your preferred font */
+        }
+    </style>
+</head>
+
+<div class="div_background">
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/Menu">Menu</a></li>
+                <li><a href="/AboutUs">About Us</a></li>
+                <li><a href="/ContactUs">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="menu-items" style="position: absolute; top: 100px; left: 30px;">
+        @foreach (var item in menuItems)
+        {
+            <div class="menu-item" style="margin-bottom: 10px;">
+                <img src="@item.ImageUrl" alt="@item.Name" class="menu-item-image" style="max-width: 100px; max-height: 100px;" />
+                <h2>@item.Name</h2>
+                <p>@item.Description</p>
+                <p class="price">$@item.Price</p>
+            </div>
+        }
+    </div>
+</div>

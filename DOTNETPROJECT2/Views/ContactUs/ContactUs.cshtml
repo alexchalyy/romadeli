@@ -1,0 +1,87 @@
+@{
+    ViewData["Title"] = "Tory's Deli";
+}
+
+<style>
+    body {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .div_background {
+        /*background-image: url(http://www.romadelilv.com/images/slides/1.jpg); */
+        background-size: cover; /* This makes the image cover the entire element */
+        background-position: center center; /* This centers the image both horizontally and vertically */
+        position: fixed; /* This positions the element relative to the viewport */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .center {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .large-text {
+        font-size: 2rem;
+        font-family: "Arial", sans-serif; /* Replace with your preferred font */
+        color: rgb(5, 5, 5); /* Change text color if needed */
+        align-items: center;
+    }
+
+    .larger-text {
+        font-size: 10rem;
+        font-family: "Arial", sans-serif; /* Replace with your preferred font */
+        color: rgb(4, 4, 4); /* Change text color if needed */
+    }
+</style>
+
+<head>
+    <title>Your Web Application</title>
+    <style>
+        /* Add CSS styles for the header and navigation links */
+        header {
+            background-color: #333; /* Background color for the header */
+            padding: 10px 0; /* Add some padding for spacing */
+            text-align: left; /* Center-align the links within the header */
+        }
+
+        nav ul {
+            list-style-type: none; /* Remove bullets from the list */
+            padding: 0;
+        }
+
+        nav li {
+            display: inline; /* Display list items inline */
+            margin: 200px; /* Add space between links */
+        }
+
+        nav a {
+            text-decoration: none; /* Remove underlines from links */
+            color: rgb(253, 251, 251); /* Text color for links */
+            font-family: "Arial", sans-serif; /* Replace with your preferred font */
+        }
+    </style>
+</head>
+
+<div class="div_background">
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/Menu">Menu</a></li>
+                <li><a href="/AboutUs">About Us</a></li>
+                <li><a href="/ContactUs">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="center">
+        <h1 class="large-text">This web site has been created by Alex Chalyy. Please contact him through https://www.linkedin.com/in/alexchalyy/.</h1>
+    </div>
+</div>
