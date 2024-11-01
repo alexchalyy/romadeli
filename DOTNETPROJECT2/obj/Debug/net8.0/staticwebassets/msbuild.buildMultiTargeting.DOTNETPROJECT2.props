@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\DOTNETPROJECT2.props" />
+</Project>
