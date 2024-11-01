@@ -23,6 +23,7 @@
 
     .div_background {
         background-size: cover; /* This makes the image cover the entire element */
+        overflow-y: auto; /* Enables vertical scrolling */
         background-position: center center; /* This centers the image both horizontally and vertically */
         position: fixed; /* This positions the element relative to the viewport */
         top: 0;
@@ -51,10 +52,18 @@
         font-family: "Arial", sans-serif; /* Replace with your preferred font */
         color: rgb(4, 4, 4); /* Change text color if needed */
     }
+
+    .menu-container {
+        height: 500px; /* Adjust height as needed */
+        overflow-y: auto; /* Enables vertical scrolling */
+        padding: 10px;
+        border: 1px solid #ccc; /* Optional border for visibility */
+        background-color: #fff; /* Optional background color */
+    }
 </style>
 
 <head>
-    <title>Your Web Application</title>
+    <title>Roma Deli</title>
     <style>
         /* Add CSS styles for the header and navigation links */
         header {
@@ -91,7 +100,7 @@
                 <li><a href="/ContactUs">Contact Us</a></li>
             </ul>
         </nav>
-    </header>
+    </header> 
     <div class="menu-items" style="position: absolute; top: 100px; left: 30px;">
         @foreach (var item in menuItems)
         {
