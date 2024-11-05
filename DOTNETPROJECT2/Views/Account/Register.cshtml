@@ -1,0 +1,17 @@
+@model TorysDeli.Models.RegisterViewModel
+
+<form asp-action="Register" method="post">
+    <input asp-for="Username" placeholder="Username" required />
+    <input asp-for="FirstName" placeholder="First Name" required />
+    <input asp-for="LastName" placeholder="Last Name" required />
+    <input asp-for="Email" placeholder="Email" required />
+    <input asp-for="Address" placeholder="Address" required />
+    <input asp-for="PhoneNumber" placeholder="Phone Number" required />
+    <input asp-for="Password" type="password" placeholder="Password" required />
+    <input asp-for="ConfirmPassword" type="password" placeholder="Confirm Password" required />
+    <button type="submit">Register</button>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
