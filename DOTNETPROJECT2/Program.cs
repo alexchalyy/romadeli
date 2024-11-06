@@ -55,6 +55,9 @@ namespace TorysDeli
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddAuthentication(/* Your Authentication Configuration */);
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/Login");
         }
 
         private static void Configure(WebApplication app, IWebHostEnvironment env)
