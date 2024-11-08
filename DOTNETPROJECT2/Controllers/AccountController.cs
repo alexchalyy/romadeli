@@ -24,35 +24,25 @@ namespace TorysDeli.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-
             if (!ModelState.IsValid)
             {
+                // Return view with validation errors
                 return View(model);
             }
 
-            var result = await _signInManager.PasswordSignInAsync(
-                model.Username ?? string.Empty, 
-                model.Password ?? string.Empty, 
-                model.RememberMe, 
-                lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
-                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                {
-                    return Redirect(returnUrl);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                return RedirectToAction("Index", "Home");
             }
-
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-            return View(model);
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                return View(model);
+            }
         }
 
         [HttpGet]
