@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Logging; // Add this namespace
 using System;
 using System.Threading.Tasks;
 
@@ -15,6 +17,10 @@ namespace TorysDeli
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Configure logging
+            builder.Logging.ClearProviders();
+            builder.Logging.AddConsole(); // Add console logging for development
 
             // Configure services
             ConfigureServices(builder.Services, builder.Configuration);
@@ -32,7 +38,8 @@ namespace TorysDeli
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"An error occurred seeding the database: {ex.Message}");
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred seeding the database.");
                 }
             }
 
@@ -56,8 +63,22 @@ namespace TorysDeli
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(/* Your Authentication Configuration */);
-            services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/Login");
+            // Configure Authentication
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Account/Login";
+                    options.LogoutPath = "/Account/Logout";
+                    options.AccessDeniedPath = "/Account/AccessDenied";
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                });
+
+            // Configure cookies for Identity
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.SlidingExpiration = true;
+            });
         }
 
         private static void Configure(WebApplication app, IWebHostEnvironment env)
@@ -65,6 +86,10 @@ namespace TorysDeli
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                if (app.Environment.IsDevelopment())
+                {
+                    app.UseMigrationsEndPoint();
+                }
             }
             else
             {
@@ -77,33 +102,14 @@ namespace TorysDeli
 
             app.UseRouting();
 
-            // Enable authentication and authorization
             app.UseAuthentication();
             app.UseAuthorization();
 
-            // Configure endpoint routing for MVC
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-                endpoints.MapControllerRoute(
-                    name: "menu",
-                    pattern: "{controller=Menu}/{action=Menu}/{id?}");
-
-                endpoints.MapControllerRoute(
-                    name: "aboutus",
-                    pattern: "{controller=AboutUs}/{action=AboutUs}/{id?}");
-
-                endpoints.MapControllerRoute(
-                    name: "contactus",
-                    pattern: "{controller=ContactUs}/{action=ContactUs}/{id?}");
-
-                endpoints.MapControllerRoute(
-                    name: "account",
-                    pattern: "{controller=Account}/{action=Register}/{id?}");
-            });
+            // Top-level route registration
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
         }
     }
 }
+
